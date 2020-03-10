@@ -14,20 +14,27 @@
 #include <math.h>
 
 using namespace std;
+using namespace cv;
 
 int image_height;
 int image_width;
 bool line_found;
 bool right_line_found;
 bool left_line_found;
+int steering;
 
 class lane_detection
 {
 	ros::NodeHandle nh_;
 	ros::Publisher pubMsg, pubDir, pubVel;
+	ros::Publisher pub_steering_;
+	ros::Publisher pub_speed_;
 	image_transport::ImageTransport it_;
 	image_transport::Subscriber sub_image_;
 	image_transport::Publisher pub_image_;
+    std_msgs::Int16 comm_steering_;
+    std_msgs::Int16 comm_speed_;
+
 
 public:
 	lane_detection() : it_(nh_)
@@ -38,6 +45,8 @@ public:
 
 		//Publisher
 		pubMsg = nh_.advertise<automodelcar::Lane>("/lane_detection",1);
+		pub_steering_= nh_.advertise<std_msgs::Int16>("/manual_control/steering", 1); 
+   		pub_speed_= nh_.advertise<std_msgs::Int16>("/manual_control/speed", 1);
 	}
 
 	void image_CallBack(const sensor_msgs::ImageConstPtr& msg)
@@ -45,6 +54,8 @@ public:
 		cv_bridge::CvImagePtr cv_ptr;
 
 		cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
+
+		start_time = cv::getTickCount();
 
 		cv:: Mat image;
 		cv::Vec4f line;
@@ -57,6 +68,12 @@ public:
 		image_height = image.size().height;
 		image_width = image.size().width;
 
+		VideoWriter video("outcpp.avi",CV_FOURCC('M','J','P','G'),10, Size(640,480));
+		video.write(image);
+		destroyAllWindows();
+
+/*
+		//Filling the black corners
 		for (int i = image_height * IMAGE_PERCENTAGE; i < image_height; i++)
 		{
 			for (int j = 0; j < image_width; j++)
@@ -67,16 +84,13 @@ public:
 				}
 			}	
 		}
-
+*/
 		//Image filtering blur applicance
 		medianBlur(image, image, FILTER_KERNEL_SIZE);
 
 		//Lane detection algorithm in the lane_detection.h header
 		LineDetection(image, image_height, image_width, lane_centers,
 		 				right_line_points, left_line_points);
-
-		cv::imshow(LANE_DETECTION_WINDOW, image);
-		cv::waitKey(3);
 
 		//Curvature Calculation
 		line_found  = false;
@@ -123,17 +137,54 @@ public:
 			float m = dif2 / dif1;
 
 			curvature_degree = SERVO_CENTER + int(atan(m)*180.0/M_PI);
-			//cout << "curvature_degree: " << curvature_degree << endl;
 
-			automodelcar::Lane LaneMsg;
-			LaneMsg.header.stamp = ros::Time::now();
-			LaneMsg.steering_value = 90;
-			LaneMsg.speed_value = 0;
-			LaneMsg.error = curvature_degree;
-			pubMsg.publish(LaneMsg);
+			comm_steering_.data = ServoSaturation(CalculateServoPWM(curvature_degree,
+														center_deviation,
+														last_center_deviation),
+														comm_steering_.data);
 		}
 
+		automodelcar::Lane LaneMsg;
+		LaneMsg.header.stamp = ros::Time::now();
+		LaneMsg.lane_angle = curvature_degree;
+		pubMsg.publish(LaneMsg);
 
+		comm_speed_.data = (int)-400;
+		pub_speed_.publish(comm_speed_);
+		pub_steering_.publish(comm_steering_);
+		if(curvature_degree >= 95)
+		{
+			comm_steering_.data = (int)170;
+			pub_steering_.publish(comm_steering_);
+		}
+		else if(curvature_degree <= 85)
+		{
+			comm_steering_.data = (int)10;
+			pub_steering_.publish(comm_steering_);
+		}
+		else{
+			comm_steering_.data = (int)120;
+			pub_steering_.publish(comm_steering_);
+		}
+
+		end_time = cv::getTickCount();
+		elapsed_time = (end_time - start_time)/cv::getTickFrequency();
+
+		if (DEBUG)
+		{
+			// Print debug info 
+			ROS_INFO(" devistion from center = %i", center_deviation);
+			ROS_INFO(" curvature_degree = %i", curvature_degree);
+			ROS_INFO(" steering_PWM = %i", comm_steering_.data);
+			ROS_INFO(" speed_PWM =  %i", comm_speed_.data);
+			cout << " right_lane = " << right_line_found << std::endl;
+			cout << " left_lane = " << left_line_found << std::endl;
+			ROS_INFO(" frame time: %.4f ----- block end\n", elapsed_time);
+			cv::imshow(LANE_DETECTION_WINDOW, image);
+			cv::waitKey(3); 			
+		}
+
+		
 
 	}
 };
@@ -143,6 +194,8 @@ int main(int argc, char** argv)
 	//Inicializar el nodo ROS
 	ros::init(argc, argv, "lane_detection");
 	ROS_INFO("RUNNING LINE DETECTION NODE ...");
+
+	comm_steering_.data = SERVO_CENTER;
 
 	lane_detection ld;
 	ros::spin();

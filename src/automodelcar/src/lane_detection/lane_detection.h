@@ -16,7 +16,7 @@ int RIGHT_LINE = -1;
 int LEFT_LINE = 1;
 int const RIGHT_LANE_ORIGIN = 120;
 int const LEFT_LANE_ORIGIN = RIGHT_LANE_ORIGIN - LANE_WIDTH;
-float const IMAGE_PERCENTAGE = 0.66;
+float const IMAGE_PERCENTAGE = 0.76;
 int const ROW_STEP = 4;
 int const SEARCH_RANGE = 10;
 int const ALLOWED_DEVIATION = LANE_WIDTH/2;
@@ -33,7 +33,7 @@ short int const MIN_RIGHT_LINE_POINTS = 8;
 short int const MIN_LEFT_LINE_POINTS = 5;
 
  /* Global variables initialization */
-std_msgs::Int16 steering_PWM, speed_PWM;
+std_msgs::Int16 comm_steering_, comm_speed_;
 int last_center_position = RIGHT_LANE_ORIGIN;
 int center_deviation = 0;
 int curvature_degree = SERVO_CENTER;

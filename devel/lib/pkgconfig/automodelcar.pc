@@ -1,0 +1,8 @@
+prefix=/home/rodrigo/catkin_ws_automodelcar/devel
+
+Name: automodelcar
+Description: Description of automodelcar
+Version: 0.0.0
+Cflags: -I/home/rodrigo/catkin_ws_automodelcar/devel/include
+Libs: -L${prefix}/lib 
+Requires: 

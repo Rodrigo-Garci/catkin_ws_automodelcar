@@ -146,6 +146,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(image_preproces src/image_preproces/image_preproces.cpp)
 add_executable(lane_detection src/lane_detection/lane_detection.cpp)
+add_executable(lane_follower src/lane_follower/lane_follower.cpp)
+add_executable(motion src/motion/motion.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -158,6 +160,8 @@ add_executable(lane_detection src/lane_detection/lane_detection.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(image_preproces ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(lane_detection ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(lane_follower ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(motion ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -169,6 +173,16 @@ target_link_libraries(image_preproces
 )
 
 target_link_libraries(lane_detection
+   ${catkin_LIBRARIES}
+   ${PROJECT_NAME}
+)
+
+target_link_libraries(lane_follower
+   ${catkin_LIBRARIES}
+   ${PROJECT_NAME}
+)
+
+target_link_libraries(motion
    ${catkin_LIBRARIES}
    ${PROJECT_NAME}
 )

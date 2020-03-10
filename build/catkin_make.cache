@@ -1,2 +1,2 @@
-
+automodelcar
 -DCATKIN_DEVEL_PREFIX=/home/rodrigo/catkin_ws_automodelcar/devel -DCMAKE_INSTALL_PREFIX=/home/rodrigo/catkin_ws_automodelcar/install -G Unix Makefiles
