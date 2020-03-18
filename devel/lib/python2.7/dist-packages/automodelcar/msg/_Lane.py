@@ -8,14 +8,13 @@ import struct
 import std_msgs.msg
 
 class Lane(genpy.Message):
-  _md5sum = "449dd1ba0aa3590031ea448bf8dee0f9"
+  _md5sum = "591f44b2768aa4fda6dac105bab22307"
   _type = "automodelcar/Lane"
   _has_header = True #flag to mark the presence of a Header object
   _full_text = """Header header
-int16 steering_value
-int16 speed_value
 int16 lane_angle
-int16 error
+int16 center_deviation
+int16 last_center_deviation
 
 ================================================================================
 MSG: std_msgs/Header
@@ -33,8 +32,8 @@ time stamp
 #Frame this data is associated with
 string frame_id
 """
-  __slots__ = ['header','steering_value','speed_value','lane_angle','error']
-  _slot_types = ['std_msgs/Header','int16','int16','int16','int16']
+  __slots__ = ['header','lane_angle','center_deviation','last_center_deviation']
+  _slot_types = ['std_msgs/Header','int16','int16','int16']
 
   def __init__(self, *args, **kwds):
     """
@@ -44,7 +43,7 @@ string frame_id
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       header,steering_value,speed_value,lane_angle,error
+       header,lane_angle,center_deviation,last_center_deviation
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -55,20 +54,17 @@ string frame_id
       #message fields cannot be None, assign default values for those that are
       if self.header is None:
         self.header = std_msgs.msg.Header()
-      if self.steering_value is None:
-        self.steering_value = 0
-      if self.speed_value is None:
-        self.speed_value = 0
       if self.lane_angle is None:
         self.lane_angle = 0
-      if self.error is None:
-        self.error = 0
+      if self.center_deviation is None:
+        self.center_deviation = 0
+      if self.last_center_deviation is None:
+        self.last_center_deviation = 0
     else:
       self.header = std_msgs.msg.Header()
-      self.steering_value = 0
-      self.speed_value = 0
       self.lane_angle = 0
-      self.error = 0
+      self.center_deviation = 0
+      self.last_center_deviation = 0
 
   def _get_types(self):
     """
@@ -91,7 +87,7 @@ string frame_id
         length = len(_x)
       buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_get_struct_4h().pack(_x.steering_value, _x.speed_value, _x.lane_angle, _x.error))
+      buff.write(_get_struct_3h().pack(_x.lane_angle, _x.center_deviation, _x.last_center_deviation))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -119,8 +115,8 @@ string frame_id
         self.header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 8
-      (_x.steering_value, _x.speed_value, _x.lane_angle, _x.error,) = _get_struct_4h().unpack(str[start:end])
+      end += 6
+      (_x.lane_angle, _x.center_deviation, _x.last_center_deviation,) = _get_struct_3h().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -142,7 +138,7 @@ string frame_id
         length = len(_x)
       buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_get_struct_4h().pack(_x.steering_value, _x.speed_value, _x.lane_angle, _x.error))
+      buff.write(_get_struct_3h().pack(_x.lane_angle, _x.center_deviation, _x.last_center_deviation))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -171,8 +167,8 @@ string frame_id
         self.header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 8
-      (_x.steering_value, _x.speed_value, _x.lane_angle, _x.error,) = _get_struct_4h().unpack(str[start:end])
+      end += 6
+      (_x.lane_angle, _x.center_deviation, _x.last_center_deviation,) = _get_struct_3h().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -187,9 +183,9 @@ def _get_struct_3I():
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
-_struct_4h = None
-def _get_struct_4h():
-    global _struct_4h
-    if _struct_4h is None:
-        _struct_4h = struct.Struct("<4h")
-    return _struct_4h
+_struct_3h = None
+def _get_struct_3h():
+    global _struct_3h
+    if _struct_3h is None:
+        _struct_3h = struct.Struct("<3h")
+    return _struct_3h

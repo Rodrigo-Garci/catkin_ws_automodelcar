@@ -285,6 +285,19 @@ gtest/fast:
 .PHONY : gtest/fast
 
 #=============================================================================
+# Target rules for targets named motion
+
+# Build rule for target.
+motion: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 motion
+.PHONY : motion
+
+# fast build rule for target.
+motion/fast:
+	$(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/build
+.PHONY : motion/fast
+
+#=============================================================================
 # Target rules for targets named lane_follower
 
 # Build rule for target.
@@ -865,6 +878,7 @@ help:
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
+	@echo "... motion"
 	@echo "... lane_follower"
 	@echo "... lane_detection"
 	@echo "... image_preproces"

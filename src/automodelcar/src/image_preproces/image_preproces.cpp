@@ -48,6 +48,10 @@ void image_CallBack(const sensor_msgs::ImageConstPtr& msg)
 		cv::Mat image = cv_ptr-> image, image_cropped, image_scaled, image_scaled_gray,
 						image_lambda, image_wrapped;
 
+		std::string camera = "RGB IMAGE";
+		cv::imshow(camera, image);
+		cv::waitKey(3);
+
 		// Region of interest (Where the road predomine)
 		cv::Rect ROI(startX, startY, width, height);
 		image_cropped = image(ROI);

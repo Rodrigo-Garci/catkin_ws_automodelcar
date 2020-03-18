@@ -408,6 +408,7 @@ clean: gtest/googlemock/gtest/CMakeFiles/gtest.dir/clean
 # Directory level rules for directory automodelcar
 
 # Convenience name for "all" pass in the directory.
+automodelcar/all: automodelcar/CMakeFiles/motion.dir/all
 automodelcar/all: automodelcar/CMakeFiles/lane_follower.dir/all
 automodelcar/all: automodelcar/CMakeFiles/lane_detection.dir/all
 automodelcar/all: automodelcar/CMakeFiles/image_preproces.dir/all
@@ -417,6 +418,7 @@ automodelcar/all: automodelcar/CMakeFiles/automodelcar_generate_messages.dir/all
 .PHONY : automodelcar/all
 
 # Convenience name for "clean" pass in the directory.
+automodelcar/clean: automodelcar/CMakeFiles/motion.dir/clean
 automodelcar/clean: automodelcar/CMakeFiles/lane_follower.dir/clean
 automodelcar/clean: automodelcar/CMakeFiles/lane_detection.dir/clean
 automodelcar/clean: automodelcar/CMakeFiles/image_preproces.dir/clean
@@ -467,6 +469,73 @@ automodelcar/clean: automodelcar/CMakeFiles/automodelcar_genlisp.dir/clean
 automodelcar/preinstall:
 
 .PHONY : automodelcar/preinstall
+
+#=============================================================================
+# Target rules for target automodelcar/CMakeFiles/motion.dir
+
+# All Build rule for target.
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/automodelcar.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/roscpp_generate_messages_py.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/std_msgs_generate_messages_py.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/automodelcar_generate_messages_py.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/roscpp_generate_messages_eus.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/automodelcar_generate_messages_nodejs.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/automodelcar_generate_messages_lisp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/automodelcar_generate_messages_cpp.dir/all
+automodelcar/CMakeFiles/motion.dir/all: automodelcar/CMakeFiles/automodelcar_generate_messages_eus.dir/all
+	$(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/depend
+	$(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/rodrigo/catkin_ws_automodelcar/build/CMakeFiles --progress-num=37,38 "Built target motion"
+.PHONY : automodelcar/CMakeFiles/motion.dir/all
+
+# Include target in all.
+all: automodelcar/CMakeFiles/motion.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+automodelcar/CMakeFiles/motion.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rodrigo/catkin_ws_automodelcar/build/CMakeFiles 21
+	$(MAKE) -f CMakeFiles/Makefile2 automodelcar/CMakeFiles/motion.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rodrigo/catkin_ws_automodelcar/build/CMakeFiles 0
+.PHONY : automodelcar/CMakeFiles/motion.dir/rule
+
+# Convenience name for target.
+motion: automodelcar/CMakeFiles/motion.dir/rule
+
+.PHONY : motion
+
+# clean rule for target.
+automodelcar/CMakeFiles/motion.dir/clean:
+	$(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/clean
+.PHONY : automodelcar/CMakeFiles/motion.dir/clean
+
+# clean rule for target.
+clean: automodelcar/CMakeFiles/motion.dir/clean
+
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target automodelcar/CMakeFiles/lane_follower.dir

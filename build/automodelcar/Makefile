@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+automodelcar/CMakeFiles/motion.dir/rule:
+	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f CMakeFiles/Makefile2 automodelcar/CMakeFiles/motion.dir/rule
+.PHONY : automodelcar/CMakeFiles/motion.dir/rule
+
+# Convenience name for target.
+motion: automodelcar/CMakeFiles/motion.dir/rule
+
+.PHONY : motion
+
+# fast build rule for target.
+motion/fast:
+	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/build
+.PHONY : motion/fast
+
+# Convenience name for target.
 automodelcar/CMakeFiles/lane_follower.dir/rule:
 	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f CMakeFiles/Makefile2 automodelcar/CMakeFiles/lane_follower.dir/rule
 .PHONY : automodelcar/CMakeFiles/lane_follower.dir/rule
@@ -920,6 +935,33 @@ src/lane_follower/lane_follower.cpp.s:
 	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f automodelcar/CMakeFiles/lane_follower.dir/build.make automodelcar/CMakeFiles/lane_follower.dir/src/lane_follower/lane_follower.cpp.s
 .PHONY : src/lane_follower/lane_follower.cpp.s
 
+src/motion/motion.o: src/motion/motion.cpp.o
+
+.PHONY : src/motion/motion.o
+
+# target to build an object file
+src/motion/motion.cpp.o:
+	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/src/motion/motion.cpp.o
+.PHONY : src/motion/motion.cpp.o
+
+src/motion/motion.i: src/motion/motion.cpp.i
+
+.PHONY : src/motion/motion.i
+
+# target to preprocess a source file
+src/motion/motion.cpp.i:
+	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/src/motion/motion.cpp.i
+.PHONY : src/motion/motion.cpp.i
+
+src/motion/motion.s: src/motion/motion.cpp.s
+
+.PHONY : src/motion/motion.s
+
+# target to generate assembly for a file
+src/motion/motion.cpp.s:
+	cd /home/rodrigo/catkin_ws_automodelcar/build && $(MAKE) -f automodelcar/CMakeFiles/motion.dir/build.make automodelcar/CMakeFiles/motion.dir/src/motion/motion.cpp.s
+.PHONY : src/motion/motion.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -930,6 +972,7 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... test"
+	@echo "... motion"
 	@echo "... lane_follower"
 	@echo "... lane_detection"
 	@echo "... image_preproces"
@@ -988,6 +1031,9 @@ help:
 	@echo "... src/lane_follower/lane_follower.o"
 	@echo "... src/lane_follower/lane_follower.i"
 	@echo "... src/lane_follower/lane_follower.s"
+	@echo "... src/motion/motion.o"
+	@echo "... src/motion/motion.i"
+	@echo "... src/motion/motion.s"
 .PHONY : help
 
 

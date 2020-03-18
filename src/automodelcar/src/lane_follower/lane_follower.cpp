@@ -21,7 +21,8 @@ class lane_follower
       int maximum_positive_rpm_, maximum_negative_rpm_;
       int maximum_steering_;
       int minimum_steering_;
-      int angle_;
+      int angle_, previous_angle_;
+      bool DERECHA = false, IZQUIERDA = false;
       float alfa_;
       float ki_, kp_, kd_;
       float yaw_, error_yaw_, sp_yaw_, ctrl_yaw_;
@@ -31,15 +32,11 @@ class lane_follower
     public:
     	lane_follower(ros::NodeHandle nh) : nh_(nh), priv_nh_("~")
     	{
-      priv_nh_.param<int>("maximum_positive_rpm", maximum_positive_rpm_, -1000);
-      priv_nh_.param<int>("minimum_negative_rpm", maximum_negative_rpm_, 1000);
-      priv_nh_.param<int>("maximum_steering", maximum_steering_, 170);
-      priv_nh_.param<int>("minimum_steering", minimum_steering_, 10);
-      priv_nh_.param<float>("angle_int", angle_int_, 0);
-      priv_nh_.param<float>("kp", kp_, 0.9);
-      priv_nh_.param<float>("kd", kd_, 0.8);
-      priv_nh_.param<float>("ki", ki_, 0.00);
-      priv_nh_.param<float>("alfa", alfa_, 0.75);
+	      priv_nh_.param<float>("angle_int", angle_int_, 0);
+	      priv_nh_.param<float>("kp", kp_, 0.9);
+	      priv_nh_.param<float>("kd", kd_, 0.8);
+	      priv_nh_.param<float>("ki", ki_, 0.00);
+	      priv_nh_.param<float>("alfa", alfa_, 0.75);
 		  pub_steering_ = nh.advertise<std_msgs::Int16>(nh.resolveName("/manual_control/steering"), 1);
 		  pub_speed_ = nh.advertise<std_msgs::Int16>(nh.resolveName("/manual_control/speed"), 1);
 		  sub_angle_ = nh.subscribe("/lane_detection", 1, &lane_follower::angle_Callback, this);    		
@@ -50,25 +47,37 @@ class lane_follower
 
 void lane_follower::angle_Callback(const automodelcar::Lane& lane)
 {
-  ////////////////////////////CONTROL ON/OFF////////////////////////////
-	/*angle_ = lane.lane_angle;
-	
-  if (angle_ >= 95)
+  /*angle_ = lane.lane_angle;
+  if(angle_ <= 87)
   {
-    comm_steering_.data = 170;
+    angle_ = 10;
+    DERECHA = true;
+    IZQUIERDA = false;
   }
-  else if (angle_ <= 85)
+  else if (angle_ >= 93)
   {
-    comm_steering_.data = 10;
+    angle_ = 170;
+    DERECHA = false;
+    IZQUIERDA = true;
   }
   else
   {
-    comm_steering_.data = 90;
+    /*if(IZQUIERDA)
+    {
+      angle_ = 90;
+      comm_steering_.data = angle_;
+      pub_steering_.publish(comm_steering_);
+      ROS_ERROR("ENTRE A 90 GRADOS");
+    }
+    angle_ = 90;
+    DERECHA = false;
+    IZQUIERDA = false;
   }
-  //////////////////////////////////////////////////////////////////*/
+  ctrl_yaw_ = angle_;*/
 
-  ////////////////////////////CONTROL PD////////////////////////////
-  angle_e_ = angle_e_*alfa_+(1-alfa_)*(lane.lane_angle);
+  ////////////////////////////CONTROL PD/////////////////////////////
+  
+  /*angle_e_ = angle_e_*alfa_+(1-alfa_)*(lane.lane_angle);
   error_yaw_ = (angle_e_);
   angle_int_ = angle_int_ + angle_e_;
   if((angle_int_*ki_)>5 || (angle_int_*ki_<-5)){
@@ -88,13 +97,28 @@ void lane_follower::angle_Callback(const automodelcar::Lane& lane)
   }
   else if(ctrl_yaw_ > 170.0){
     ctrl_yaw_ = 170.0;
-  } 
+  }*/
+  
   //////////////////////////////////////////////////////////////////
-  comm_steering_.data = (int)ctrl_yaw_;
 
+		comm_steering_.data = ServoSaturation(
+			CalculateServoPWM(
+				lane.lane_angle,
+				lane.center_deviation,  
+				lane.last_center_deviation),
+			comm_steering_.data);
+
+		// Speed PWM calculation
+		comm_speed_.data = 
+			SpeedSaturation(
+				CalculateSpeedPWM(comm_steering_.data),
+				comm_speed_.data);
+
+/*
+  comm_steering_.data = (int)ctrl_yaw_;
   comm_speed_.data = SpeedSaturation(CalculateSpeedPWM(comm_steering_.data),
                                                     comm_speed_.data);
-
+*/
   pub_speed_.publish(comm_speed_);
   pub_steering_.publish(comm_steering_);
 

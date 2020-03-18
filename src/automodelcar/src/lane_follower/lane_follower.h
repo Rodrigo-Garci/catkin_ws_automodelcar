@@ -5,14 +5,13 @@ int MAX_STEERING_ANGLE_LEFT = 10;
 int MAX_STEERING_ANGLE_RIGHT = 170;
 int MAX_VEL = -400;
 int SERVO_STEP = 3;
-int LANE_WIDTH = 110;
 int SERVO_CENTER = 90;
 bool DRIVE_RIGHT_LANE = true;
 float STEERING_SPEED_RATIO = 1.2;
 
 int const SPEED_INCREASE_STEP = 8;
 int const SPEED_DECREASE_STEP = 10;
-float const MULTIPLY_FACTOR = MAX_VEL / 100.0;
+float const MULTIPLY_FACTOR = (MAX_VEL+230) / 100.0;
 
  /*
   * Calculates the servo PWM accordingly to the center_deviation,
@@ -113,3 +112,26 @@ int ServoSaturation(
 
     return current_speed;
   }
+
+
+/*
+This is an interpolation formula
+*/
+  int transform(float value, float JoyMin, float JoyMax, float TargetMin, float TargetMax)
+{
+  float joyRange;
+  float targetRange;
+  float valueScaled;
+  float valueS;
+
+  //Figure out how 'wide' each range is
+  joyRange = JoyMax - JoyMin;
+  targetRange = TargetMax - TargetMin;
+
+  //Convert the left range into a 0-1 range (float)
+  valueScaled = float(value - JoyMin) / float(joyRange);
+
+  //Convert the 0-1 range into a value in the right range.
+  valueS = TargetMin + (valueScaled * targetRange);
+  return int(valueS);
+}

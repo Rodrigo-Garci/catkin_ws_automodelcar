@@ -26,17 +26,15 @@ struct Lane_
 
   Lane_()
     : header()
-    , steering_value(0)
-    , speed_value(0)
     , lane_angle(0)
-    , error(0)  {
+    , center_deviation(0)
+    , last_center_deviation(0)  {
     }
   Lane_(const ContainerAllocator& _alloc)
     : header(_alloc)
-    , steering_value(0)
-    , speed_value(0)
     , lane_angle(0)
-    , error(0)  {
+    , center_deviation(0)
+    , last_center_deviation(0)  {
   (void)_alloc;
     }
 
@@ -45,17 +43,14 @@ struct Lane_
    typedef  ::std_msgs::Header_<ContainerAllocator>  _header_type;
   _header_type header;
 
-   typedef int16_t _steering_value_type;
-  _steering_value_type steering_value;
-
-   typedef int16_t _speed_value_type;
-  _speed_value_type speed_value;
-
    typedef int16_t _lane_angle_type;
   _lane_angle_type lane_angle;
 
-   typedef int16_t _error_type;
-  _error_type error;
+   typedef int16_t _center_deviation_type;
+  _center_deviation_type center_deviation;
+
+   typedef int16_t _last_center_deviation_type;
+  _last_center_deviation_type last_center_deviation;
 
 
 
@@ -135,12 +130,12 @@ struct MD5Sum< ::automodelcar::Lane_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "449dd1ba0aa3590031ea448bf8dee0f9";
+    return "591f44b2768aa4fda6dac105bab22307";
   }
 
   static const char* value(const ::automodelcar::Lane_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x449dd1ba0aa35900ULL;
-  static const uint64_t static_value2 = 0x31ea448bf8dee0f9ULL;
+  static const uint64_t static_value1 = 0x591f44b2768aa4fdULL;
+  static const uint64_t static_value2 = 0xa6dac105bab22307ULL;
 };
 
 template<class ContainerAllocator>
@@ -160,10 +155,9 @@ struct Definition< ::automodelcar::Lane_<ContainerAllocator> >
   static const char* value()
   {
     return "Header header\n"
-"int16 steering_value\n"
-"int16 speed_value\n"
 "int16 lane_angle\n"
-"int16 error\n"
+"int16 center_deviation\n"
+"int16 last_center_deviation\n"
 "\n"
 "================================================================================\n"
 "MSG: std_msgs/Header\n"
@@ -199,10 +193,9 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.header);
-      stream.next(m.steering_value);
-      stream.next(m.speed_value);
       stream.next(m.lane_angle);
-      stream.next(m.error);
+      stream.next(m.center_deviation);
+      stream.next(m.last_center_deviation);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -224,14 +217,12 @@ struct Printer< ::automodelcar::Lane_<ContainerAllocator> >
     s << indent << "header: ";
     s << std::endl;
     Printer< ::std_msgs::Header_<ContainerAllocator> >::stream(s, indent + "  ", v.header);
-    s << indent << "steering_value: ";
-    Printer<int16_t>::stream(s, indent + "  ", v.steering_value);
-    s << indent << "speed_value: ";
-    Printer<int16_t>::stream(s, indent + "  ", v.speed_value);
     s << indent << "lane_angle: ";
     Printer<int16_t>::stream(s, indent + "  ", v.lane_angle);
-    s << indent << "error: ";
-    Printer<int16_t>::stream(s, indent + "  ", v.error);
+    s << indent << "center_deviation: ";
+    Printer<int16_t>::stream(s, indent + "  ", v.center_deviation);
+    s << indent << "last_center_deviation: ";
+    Printer<int16_t>::stream(s, indent + "  ", v.last_center_deviation);
   }
 };
 

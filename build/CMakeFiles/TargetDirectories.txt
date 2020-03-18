@@ -39,6 +39,7 @@
 /home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/install.dir
 /home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/list_install_components.dir
 /home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/test.dir
+/home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/motion.dir
 /home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/lane_follower.dir
 /home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/lane_detection.dir
 /home/rodrigo/catkin_ws_automodelcar/build/automodelcar/CMakeFiles/image_preproces.dir

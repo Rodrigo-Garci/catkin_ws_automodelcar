@@ -1,12 +1,10 @@
 (cl:in-package automodelcar-msg)
 (cl:export '(HEADER-VAL
           HEADER
-          STEERING_VALUE-VAL
-          STEERING_VALUE
-          SPEED_VALUE-VAL
-          SPEED_VALUE
           LANE_ANGLE-VAL
           LANE_ANGLE
-          ERROR-VAL
-          ERROR
+          CENTER_DEVIATION-VAL
+          CENTER_DEVIATION
+          LAST_CENTER_DEVIATION-VAL
+          LAST_CENTER_DEVIATION
 ))

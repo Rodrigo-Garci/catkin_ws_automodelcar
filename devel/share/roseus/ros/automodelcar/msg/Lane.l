@@ -16,23 +16,21 @@
 
 (defclass automodelcar::Lane
   :super ros::object
-  :slots (_header _steering_value _speed_value _lane_angle _error ))
+  :slots (_header _lane_angle _center_deviation _last_center_deviation ))
 
 (defmethod automodelcar::Lane
   (:init
    (&key
     ((:header __header) (instance std_msgs::Header :init))
-    ((:steering_value __steering_value) 0)
-    ((:speed_value __speed_value) 0)
     ((:lane_angle __lane_angle) 0)
-    ((:error __error) 0)
+    ((:center_deviation __center_deviation) 0)
+    ((:last_center_deviation __last_center_deviation) 0)
     )
    (send-super :init)
    (setq _header __header)
-   (setq _steering_value (round __steering_value))
-   (setq _speed_value (round __speed_value))
    (setq _lane_angle (round __lane_angle))
-   (setq _error (round __error))
+   (setq _center_deviation (round __center_deviation))
+   (setq _last_center_deviation (round __last_center_deviation))
    self)
   (:header
    (&rest __header)
@@ -41,30 +39,25 @@
      (progn
        (if __header (setq _header (car __header)))
        _header)))
-  (:steering_value
-   (&optional __steering_value)
-   (if __steering_value (setq _steering_value __steering_value)) _steering_value)
-  (:speed_value
-   (&optional __speed_value)
-   (if __speed_value (setq _speed_value __speed_value)) _speed_value)
   (:lane_angle
    (&optional __lane_angle)
    (if __lane_angle (setq _lane_angle __lane_angle)) _lane_angle)
-  (:error
-   (&optional __error)
-   (if __error (setq _error __error)) _error)
+  (:center_deviation
+   (&optional __center_deviation)
+   (if __center_deviation (setq _center_deviation __center_deviation)) _center_deviation)
+  (:last_center_deviation
+   (&optional __last_center_deviation)
+   (if __last_center_deviation (setq _last_center_deviation __last_center_deviation)) _last_center_deviation)
   (:serialization-length
    ()
    (+
     ;; std_msgs/Header _header
     (send _header :serialization-length)
-    ;; int16 _steering_value
-    2
-    ;; int16 _speed_value
-    2
     ;; int16 _lane_angle
     2
-    ;; int16 _error
+    ;; int16 _center_deviation
+    2
+    ;; int16 _last_center_deviation
     2
     ))
   (:serialize
@@ -73,40 +66,35 @@
               (make-string-output-stream (send self :serialization-length)))))
      ;; std_msgs/Header _header
        (send _header :serialize s)
-     ;; int16 _steering_value
-       (write-word _steering_value s)
-     ;; int16 _speed_value
-       (write-word _speed_value s)
      ;; int16 _lane_angle
        (write-word _lane_angle s)
-     ;; int16 _error
-       (write-word _error s)
+     ;; int16 _center_deviation
+       (write-word _center_deviation s)
+     ;; int16 _last_center_deviation
+       (write-word _last_center_deviation s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
    ;; std_msgs/Header _header
      (send _header :deserialize buf ptr-) (incf ptr- (send _header :serialization-length))
-   ;; int16 _steering_value
-     (setq _steering_value (sys::peek buf ptr- :short)) (incf ptr- 2)
-   ;; int16 _speed_value
-     (setq _speed_value (sys::peek buf ptr- :short)) (incf ptr- 2)
    ;; int16 _lane_angle
      (setq _lane_angle (sys::peek buf ptr- :short)) (incf ptr- 2)
-   ;; int16 _error
-     (setq _error (sys::peek buf ptr- :short)) (incf ptr- 2)
+   ;; int16 _center_deviation
+     (setq _center_deviation (sys::peek buf ptr- :short)) (incf ptr- 2)
+   ;; int16 _last_center_deviation
+     (setq _last_center_deviation (sys::peek buf ptr- :short)) (incf ptr- 2)
    ;;
    self)
   )
 
-(setf (get automodelcar::Lane :md5sum-) "449dd1ba0aa3590031ea448bf8dee0f9")
+(setf (get automodelcar::Lane :md5sum-) "591f44b2768aa4fda6dac105bab22307")
 (setf (get automodelcar::Lane :datatype-) "automodelcar/Lane")
 (setf (get automodelcar::Lane :definition-)
       "Header header
-int16 steering_value
-int16 speed_value
 int16 lane_angle
-int16 error
+int16 center_deviation
+int16 last_center_deviation
 
 ================================================================================
 MSG: std_msgs/Header
@@ -128,6 +116,6 @@ string frame_id
 
 
 
-(provide :automodelcar/Lane "449dd1ba0aa3590031ea448bf8dee0f9")
+(provide :automodelcar/Lane "591f44b2768aa4fda6dac105bab22307")
 
 

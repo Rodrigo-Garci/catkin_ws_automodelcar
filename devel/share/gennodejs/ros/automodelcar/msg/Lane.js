@@ -20,10 +20,9 @@ class Lane {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.header = null;
-      this.steering_value = null;
-      this.speed_value = null;
       this.lane_angle = null;
-      this.error = null;
+      this.center_deviation = null;
+      this.last_center_deviation = null;
     }
     else {
       if (initObj.hasOwnProperty('header')) {
@@ -32,29 +31,23 @@ class Lane {
       else {
         this.header = new std_msgs.msg.Header();
       }
-      if (initObj.hasOwnProperty('steering_value')) {
-        this.steering_value = initObj.steering_value
-      }
-      else {
-        this.steering_value = 0;
-      }
-      if (initObj.hasOwnProperty('speed_value')) {
-        this.speed_value = initObj.speed_value
-      }
-      else {
-        this.speed_value = 0;
-      }
       if (initObj.hasOwnProperty('lane_angle')) {
         this.lane_angle = initObj.lane_angle
       }
       else {
         this.lane_angle = 0;
       }
-      if (initObj.hasOwnProperty('error')) {
-        this.error = initObj.error
+      if (initObj.hasOwnProperty('center_deviation')) {
+        this.center_deviation = initObj.center_deviation
       }
       else {
-        this.error = 0;
+        this.center_deviation = 0;
+      }
+      if (initObj.hasOwnProperty('last_center_deviation')) {
+        this.last_center_deviation = initObj.last_center_deviation
+      }
+      else {
+        this.last_center_deviation = 0;
       }
     }
   }
@@ -63,14 +56,12 @@ class Lane {
     // Serializes a message object of type Lane
     // Serialize message field [header]
     bufferOffset = std_msgs.msg.Header.serialize(obj.header, buffer, bufferOffset);
-    // Serialize message field [steering_value]
-    bufferOffset = _serializer.int16(obj.steering_value, buffer, bufferOffset);
-    // Serialize message field [speed_value]
-    bufferOffset = _serializer.int16(obj.speed_value, buffer, bufferOffset);
     // Serialize message field [lane_angle]
     bufferOffset = _serializer.int16(obj.lane_angle, buffer, bufferOffset);
-    // Serialize message field [error]
-    bufferOffset = _serializer.int16(obj.error, buffer, bufferOffset);
+    // Serialize message field [center_deviation]
+    bufferOffset = _serializer.int16(obj.center_deviation, buffer, bufferOffset);
+    // Serialize message field [last_center_deviation]
+    bufferOffset = _serializer.int16(obj.last_center_deviation, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -80,21 +71,19 @@ class Lane {
     let data = new Lane(null);
     // Deserialize message field [header]
     data.header = std_msgs.msg.Header.deserialize(buffer, bufferOffset);
-    // Deserialize message field [steering_value]
-    data.steering_value = _deserializer.int16(buffer, bufferOffset);
-    // Deserialize message field [speed_value]
-    data.speed_value = _deserializer.int16(buffer, bufferOffset);
     // Deserialize message field [lane_angle]
     data.lane_angle = _deserializer.int16(buffer, bufferOffset);
-    // Deserialize message field [error]
-    data.error = _deserializer.int16(buffer, bufferOffset);
+    // Deserialize message field [center_deviation]
+    data.center_deviation = _deserializer.int16(buffer, bufferOffset);
+    // Deserialize message field [last_center_deviation]
+    data.last_center_deviation = _deserializer.int16(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
-    return length + 8;
+    return length + 6;
   }
 
   static datatype() {
@@ -104,17 +93,16 @@ class Lane {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '449dd1ba0aa3590031ea448bf8dee0f9';
+    return '591f44b2768aa4fda6dac105bab22307';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     Header header
-    int16 steering_value
-    int16 speed_value
     int16 lane_angle
-    int16 error
+    int16 center_deviation
+    int16 last_center_deviation
     
     ================================================================================
     MSG: std_msgs/Header
@@ -148,20 +136,6 @@ class Lane {
       resolved.header = new std_msgs.msg.Header()
     }
 
-    if (msg.steering_value !== undefined) {
-      resolved.steering_value = msg.steering_value;
-    }
-    else {
-      resolved.steering_value = 0
-    }
-
-    if (msg.speed_value !== undefined) {
-      resolved.speed_value = msg.speed_value;
-    }
-    else {
-      resolved.speed_value = 0
-    }
-
     if (msg.lane_angle !== undefined) {
       resolved.lane_angle = msg.lane_angle;
     }
@@ -169,11 +143,18 @@ class Lane {
       resolved.lane_angle = 0
     }
 
-    if (msg.error !== undefined) {
-      resolved.error = msg.error;
+    if (msg.center_deviation !== undefined) {
+      resolved.center_deviation = msg.center_deviation;
     }
     else {
-      resolved.error = 0
+      resolved.center_deviation = 0
+    }
+
+    if (msg.last_center_deviation !== undefined) {
+      resolved.last_center_deviation = msg.last_center_deviation;
+    }
+    else {
+      resolved.last_center_deviation = 0
     }
 
     return resolved;
