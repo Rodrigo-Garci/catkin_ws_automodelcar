@@ -2,8 +2,8 @@
 static const std::string LANE_DETECTION_WINDOW = "Lane Detection";
 bool DEBUG = true;
 bool DIRECT_CONTROL = false;
-int MAX_STEERING_ANGLE_LEFT = 20;
-int MAX_STEERING_ANGLE_RIGHT = 160;
+int MAX_STEERING_ANGLE_LEFT = 10;
+int MAX_STEERING_ANGLE_RIGHT = 170;
 int MAX_VEL = -500;
 int SERVO_STEP = 3;
 int LANE_WIDTH = 50;
@@ -16,7 +16,7 @@ int RIGHT_LINE = -1;
 int LEFT_LINE = 1;
 int const RIGHT_LANE_ORIGIN = 120;
 int const LEFT_LANE_ORIGIN = RIGHT_LANE_ORIGIN - LANE_WIDTH;
-float const IMAGE_PERCENTAGE = 0.76;
+float const IMAGE_PERCENTAGE = 0.82;
 int const ROW_STEP = 4;
 int const SEARCH_RANGE = 10;
 int const ALLOWED_DEVIATION = LANE_WIDTH/2;
@@ -29,7 +29,7 @@ int const SPEED_INCREASE_STEP = 8;
 int const SPEED_DECREASE_STEP = 10;
 float const MULTIPLY_FACTOR = MAX_VEL / 100.0;
 short int const GAP = 10;
-short int const MIN_RIGHT_LINE_POINTS = 8;
+short int const MIN_RIGHT_LINE_POINTS = 15;
 short int const MIN_LEFT_LINE_POINTS = 5;
 
  /* Global variables initialization */

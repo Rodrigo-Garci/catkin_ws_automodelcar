@@ -1,6 +1,7 @@
 //Version  05/03/20 
 #include <ros/ros.h>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 #include <image_transport/image_transport.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>  
@@ -68,10 +69,6 @@ public:
 		image_height = image.size().height;
 		image_width = image.size().width;
 
-		VideoWriter video("outcpp.avi",CV_FOURCC('M','J','P','G'),10, Size(640,480));
-		video.write(image);
-		destroyAllWindows();
-
 /*
 		//Filling the black corners
 		for (int i = image_height * IMAGE_PERCENTAGE; i < image_height; i++)
@@ -137,35 +134,22 @@ public:
 			float m = dif2 / dif1;
 
 			curvature_degree = SERVO_CENTER + int(atan(m)*180.0/M_PI);
+		}
 
-			comm_steering_.data = ServoSaturation(CalculateServoPWM(curvature_degree,
-														center_deviation,
-														last_center_deviation),
-														comm_steering_.data);
+		else
+		{
+			comm_speed_.data = 0;
+			pub_speed_.publish(comm_speed_);
 		}
 
 		automodelcar::Lane LaneMsg;
 		LaneMsg.header.stamp = ros::Time::now();
 		LaneMsg.lane_angle = curvature_degree;
+		LaneMsg.center_deviation = center_deviation;
+		LaneMsg.last_center_deviation = last_center_deviation;
 		pubMsg.publish(LaneMsg);
 
-		comm_speed_.data = (int)-400;
-		pub_speed_.publish(comm_speed_);
-		pub_steering_.publish(comm_steering_);
-		if(curvature_degree >= 95)
-		{
-			comm_steering_.data = (int)170;
-			pub_steering_.publish(comm_steering_);
-		}
-		else if(curvature_degree <= 85)
-		{
-			comm_steering_.data = (int)10;
-			pub_steering_.publish(comm_steering_);
-		}
-		else{
-			comm_steering_.data = (int)120;
-			pub_steering_.publish(comm_steering_);
-		}
+		last_center_deviation = center_deviation;
 
 		end_time = cv::getTickCount();
 		elapsed_time = (end_time - start_time)/cv::getTickFrequency();
@@ -175,10 +159,10 @@ public:
 			// Print debug info 
 			ROS_INFO(" devistion from center = %i", center_deviation);
 			ROS_INFO(" curvature_degree = %i", curvature_degree);
-			ROS_INFO(" steering_PWM = %i", comm_steering_.data);
-			ROS_INFO(" speed_PWM =  %i", comm_speed_.data);
 			cout << " right_lane = " << right_line_found << std::endl;
 			cout << " left_lane = " << left_line_found << std::endl;
+			cout << " right_line_points.size(): "<< right_line_points.size() <<endl;
+			cout << " left_line_points.size(): "<< left_line_points.size() << endl;
 			ROS_INFO(" frame time: %.4f ----- block end\n", elapsed_time);
 			cv::imshow(LANE_DETECTION_WINDOW, image);
 			cv::waitKey(3); 			
