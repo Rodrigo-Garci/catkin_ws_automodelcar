@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rodrigo/Documentos/OpenCv_gcc/line_detection.cpp
+opencv2/opencv.hpp
+-
+opencv2/imgproc/imgproc.hpp
+-
+vector
+-
+

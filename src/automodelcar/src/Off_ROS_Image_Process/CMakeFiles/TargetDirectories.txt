@@ -1,0 +1,5 @@
+/home/rodrigo/Documentos/OpenCv_gcc/CMakeFiles/rebuild_cache.dir
+/home/rodrigo/Documentos/OpenCv_gcc/CMakeFiles/edit_cache.dir
+/home/rodrigo/Documentos/OpenCv_gcc/CMakeFiles/DisplayImage.dir
+/home/rodrigo/Documentos/OpenCv_gcc/CMakeFiles/line_detection.dir
+/home/rodrigo/Documentos/OpenCv_gcc/CMakeFiles/LocMax_pw.dir
